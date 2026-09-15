@@ -26,11 +26,20 @@
     }
   }
 
+  function withHsFlag(url) {
+    if (url.indexOf("hs=1") !== -1) return url;
+    return url + (url.indexOf("?") === -1 ? "?" : "&") + "hs=1";
+  }
+
   function href(page) {
     const url = base + page;
-    /* base preenchido = cópia do roteador. Carimba a origem no link externo. */
-    if (!base) return url;
-    return url + (url.indexOf("?") === -1 ? "?" : "&") + "hs=1";
+    /* base preenchido = cópia do roteador: carimba a origem no link externo.
+       base vazio = cópia externa: propaga o carimbo adiante enquanto a sessão
+       souber que viemos do portal. Assim o marcador sobrevive a navegador que
+       bloqueia sessionStorage e a aba aberta do zero. */
+    if (base) return withHsFlag(url);
+    if (cameFromHotspot()) return withHsFlag(url);
+    return url;
   }
 
   setHotspotOrigin();
