@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#3f76ff">
   <title>GoWork — Acesso à Internet</title>
-  <link rel="stylesheet" href="assets/css/app.css?v=3">
+  <link rel="stylesheet" href="assets/css/app.css?v=4">
 </head>
 <body>
   <div class="app-shell">
@@ -101,16 +101,19 @@
       </section>
     </main>
   </div>
-  <script src="assets/js/md5.js?v=3"></script>
+  <script src="assets/js/md5.js?v=4"></script>
   <script>
     /* chap-id / chap-challenge precisam estar no HTML — o RouterOS não reescreve app.js */
     window.GOWORK_HOTSPOT = {
       chapId: "$(chap-id)",
-      chapChallenge: "$(chap-challenge)"
+      chapChallenge: "$(chap-challenge)",
+      /* MAC do visitante: viaja com o lead para dar identidade ao cadastro.
+         Se o RouterOS não substituir, chega o literal e o app.js descarta. */
+      mac: "$(mac)"
     };
   </script>
-  <script src="assets/js/config.js?v=3"></script>
-  <script src="assets/js/app.js?v=3"></script>
+  <script src="assets/js/config.js?v=4"></script>
+  <script src="assets/js/app.js?v=4"></script>
   
 </body>
 </html>

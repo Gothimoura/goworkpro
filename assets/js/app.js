@@ -7,14 +7,28 @@
      para saber que o visitante está atrás do hotspot e o login pode ser
      injetado depois do cadastro. */
   const HS_FLAG = "gowork-hotspot-origin";
+  const HS_MAC = "gowork-hotspot-mac";
 
   function setHotspotOrigin() {
     try {
-      if (new URLSearchParams(location.search).get("hs") === "1") {
-        sessionStorage.setItem(HS_FLAG, "1");
-      }
+      const p = new URLSearchParams(location.search);
+      if (p.get("hs") === "1") sessionStorage.setItem(HS_FLAG, "1");
+      const m = p.get("mac");
+      if (m) sessionStorage.setItem(HS_MAC, m);
     } catch (e) {
       /* navegador sem sessionStorage: segue sem a marca */
+    }
+  }
+
+  /* MAC do visitante. Na tela 1 vem do servlet do RouterOS; nas telas externas
+     vem da URL/sessão. Literal não substituído é descartado. */
+  function hotspotMac() {
+    const hs = window.GOWORK_HOTSPOT || {};
+    if (hs.mac && !isMikrotikLiteral(hs.mac)) return hs.mac;
+    try {
+      return sessionStorage.getItem(HS_MAC) || "";
+    } catch (e) {
+      return "";
     }
   }
 
@@ -26,9 +40,16 @@
     }
   }
 
+  function addParam(url, key, value) {
+    if (url.indexOf(key + "=") !== -1) return url;
+    return url + (url.indexOf("?") === -1 ? "?" : "&") + key + "=" + encodeURIComponent(value);
+  }
+
   function withHsFlag(url) {
-    if (url.indexOf("hs=1") !== -1) return url;
-    return url + (url.indexOf("?") === -1 ? "?" : "&") + "hs=1";
+    let out = addParam(url, "hs", "1");
+    const mac = hotspotMac();
+    if (mac) out = addParam(out, "mac", mac);
+    return out;
   }
 
   function href(page) {
@@ -145,6 +166,8 @@
         plano: plan,
         data_hora: new Date().toISOString(),
         submitted_at: new Date().toISOString(),
+        /* identidade do dispositivo: liga o cadastro ao aparelho */
+        mac_dispositivo: hotspotMac(),
       },
       payload
     );
