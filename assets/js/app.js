@@ -2,9 +2,38 @@
   const cfg = window.GOWORK_PRO_CONFIG || {};
   const base = cfg.pageBase || "";
 
-  function href(page) {
-    return base + page;
+  /* Marcador de origem: quando a tela 1 (roteador) manda o visitante para as
+     telas externas, carimba ?hs=1. As telas seguintes guardam isso na sessão
+     para saber que o visitante está atrás do hotspot e o login pode ser
+     injetado depois do cadastro. */
+  const HS_FLAG = "gowork-hotspot-origin";
+
+  function setHotspotOrigin() {
+    try {
+      if (new URLSearchParams(location.search).get("hs") === "1") {
+        sessionStorage.setItem(HS_FLAG, "1");
+      }
+    } catch (e) {
+      /* navegador sem sessionStorage: segue sem a marca */
+    }
   }
+
+  function cameFromHotspot() {
+    try {
+      return sessionStorage.getItem(HS_FLAG) === "1";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function href(page) {
+    const url = base + page;
+    /* base preenchido = cópia do roteador. Carimba a origem no link externo. */
+    if (!base) return url;
+    return url + (url.indexOf("?") === -1 ? "?" : "&") + "hs=1";
+  }
+
+  setHotspotOrigin();
 
   function qs(name) {
     return new URLSearchParams(location.search).get(name) || "";
@@ -212,8 +241,38 @@
     });
   }
 
+  /* INJEÇÃO DE ACESSO: quem se cadastrou entra na rede.
+     O formulário roda no domínio externo (HTTPS), mas quem autentica é o
+     roteador. Então o visitante passa pelo endpoint de login do hotspot, que
+     autentica e o devolve ao obrigado.html — já com internet liberada.
+     Exige login-by=http-pap no profile do hotspot (a página externa não tem
+     acesso ao desafio CHAP). */
+  function hotspotInjectUrl(dst) {
+    if (!cfg.hotspotLoginUrl) return "";
+    /* Só injeta se o visitante veio mesmo da tela 1 do portal. Quem abriu o
+       site de fora da rede GoWork não deve ser mandado para um IP local. */
+    if (!cameFromHotspot()) return "";
+    const q = new URLSearchParams();
+    q.set("username", cfg.leadUsername || cfg.conectaUsername || "conecta");
+    q.set(
+      "password",
+      cfg.leadPassword == null ? String(cfg.conectaPassword || "") : String(cfg.leadPassword)
+    );
+    if (dst) q.set("dst", dst);
+    return cfg.hotspotLoginUrl + "?" + q.toString();
+  }
+
   function goThanks(plan) {
-    location.href = href("obrigado.html?plano=" + encodeURIComponent(plan || ""));
+    const thanks = href("obrigado.html?plano=" + encodeURIComponent(plan || ""));
+    let absolute = thanks;
+    try {
+      absolute = new URL(thanks, location.href).href;
+    } catch (e) {
+      /* URL relativa sem base utilizável: manda o que temos */
+    }
+    const inject = hotspotInjectUrl(absolute);
+    /* Sem hotspot (acesso externo ou preview): vai direto para o obrigado. */
+    location.href = inject || thanks;
   }
 
   function setPlanMode(plan) {

@@ -2,7 +2,7 @@
 # Gera a cópia da TELA 1 que vai para o hotspot do MikroTik.
 # Fonte única de verdade = este projeto. Só o config.js muda.
 #
-# Uso:  ./build-router.sh https://gowork-pro.netlify.app
+# Uso:  ./build-router.sh https://goworkpro.netlify.app
 set -euo pipefail
 
 BASE="${1:-}"

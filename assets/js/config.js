@@ -6,6 +6,11 @@ window.GOWORK_PRO_CONFIG = {
   /* Usuário genérico do hotspot MikroTik (login-by=http-chap). Criar o mesmo par no RB5009. */
   conectaUsername: "conecta",
   conectaPassword: "conecta",
+  /* INJEÇÃO DE ACESSO pós-cadastro: endpoint de login do hotspot no RB5009.
+     Só é acionado quando o visitante chegou pela tela 1 (marcador ?hs=1). */
+  hotspotLoginUrl: "http://192.168.33.1/login",
+  leadUsername: "lead",
+  leadPassword: "gowork-lead",
   webhookUrl: "",
   hubspotPortalId: "",
   hubspotFormIdDayMensal: "",
