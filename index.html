@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3f76ff">
+  <title>GoWork — Acesso à Internet</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="bg-layers" aria-hidden="true">
+      <div class="login-grid"></div>
+      <div class="login-blob" style="top:-6rem;left:-6rem;width:26rem;height:26rem;background:radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--blue) 55%, transparent), transparent 70%)"></div>
+      <div class="login-blob" style="bottom:-8rem;right:-6rem;width:30rem;height:30rem;background:radial-gradient(circle at 70% 70%, color-mix(in srgb, var(--cyan) 55%, transparent), transparent 70%);animation-delay:-6s"></div>
+    </div>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" data-href="index.html" aria-label="GoWork">
+          <img class="brand__symbol" src="assets/img/gowork-mark.png" alt="">
+          <span class="brand__wordmark" aria-hidden="true"><strong>GO</strong><span>WORK.</span></span>
+        </a>
+        <div class="status-pill" data-short="Conectado" role="status">Você está conectado à rede GoWork</div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero" aria-labelledby="page-title">
+        <h1 id="page-title">Bem-vindo à sua rede <span class="gradient-text">GoWork</span></h1>
+        <p class="hero__lead">
+          Você está conectado ao <strong>GoWork Conecta</strong>, a rede compartilhada
+          incluída no contrato da sua empresa para as atividades profissionais do dia a dia.
+        </p>
+        <div class="information">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 10.6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.1" fill="currentColor"/></svg>
+          <p>
+            Para preservar uma boa experiência para todos, o GoWork Conecta possui limites de
+            utilização e não é indicado para streaming prolongado, downloads pessoais de grande
+            volume, backups extensos ou operações críticas.
+          </p>
+        </div>
+      </section>
+
+      <p class="bridge">
+        Precisa de maior capacidade, mais desempenho ou uma solução sob medida?<br>
+        Conheça as opções <strong>GoWork Pro</strong>.
+      </p>
+
+      <section class="plans" aria-label="Planos de conectividade">
+        <article class="plan-card">
+          <div class="eyebrow">Incluído no contrato da sua empresa</div>
+          <h2>GoWork Conecta</h2>
+          <p class="plan-card__subtitle">Conectividade compartilhada para o trabalho cotidiano</p>
+          <ul class="features"><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>E-mail, sistemas e navegação</span></li><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>WhatsApp e ferramentas de comunicação</span></li><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Reuniões online de rotina</span></li><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Uso profissional em notebooks e celulares</span></li><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Rede compartilhada entre os usuários GoWork</span></li></ul>
+          <div class="warning-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.7 20h18.6L12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17.1" r="1" fill="currentColor"/></svg>
+            <p>Não indicado para streaming prolongado, downloads pessoais em grande volume, backups extensos, arquivos pesados ou operações críticas.</p>
+          </div>
+          <div class="card-spacer"></div>
+          <!-- login-by=http-chap: $(...) só é substituído pelo RouterOS no html-directory -->
+          <form id="hotspot-login" class="hotspot-login" method="post" action="$(link-login-only)" data-preview-href="obrigado.html?plano=conecta">
+            <input type="hidden" name="dst" value="$(link-orig)">
+            <input type="hidden" name="popup" value="true">
+            <input type="hidden" name="username" value="">
+            <input type="hidden" name="password" value="">
+            <p id="hotspot-error" class="form-error" hidden>$(error)</p>
+            <button type="submit" class="cta btn--ghost" data-conecta>Continuar com o GoWork Conecta</button>
+          </form>
+        </article>
+
+        <article class="plan-card plan-card--pro">
+          <div class="eyebrow">Mais performance para você ou sua empresa</div>
+          <h2>GoWork Pro</h2>
+          <p class="plan-card__subtitle">Escolha uma solução de maior capacidade para sua necessidade</p>
+          <ul class="features"><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Planos diários e mensais por usuário</span></li><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Melhor experiência com VPN e videoconferências</span></li><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Maior capacidade para transferências e arquivos</span></li><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Soluções corporativas personalizadas</span></li><li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.2 12.1 2.4 2.5 5.3-5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Suporte especializado conforme o plano contratado</span></li></ul>
+          <div class="price-box">
+            <div>
+              <span class="price-box__label" style="color:var(--muted);font-size:14px">Planos a partir de</span>
+              <div class="price">R$ 30 <small>por usuário</small></div>
+            </div>
+          </div>
+          <div class="card-spacer"></div>
+          <a class="cta" data-href="planos.html">Conhecer o GoWork Pro</a>
+        </article>
+      </section>
+
+      <section class="legal" aria-label="Condições de uso">
+        <div class="legal__main">
+          <svg class="legal__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 6v5.2c0 4.9 3.1 8.3 7.5 10 4.4-1.7 7.5-5.1 7.5-10V6L12 2.8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8.8 12 2.1 2.1 4.4-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <p>
+            Ao continuar, você declara ciência de que o GoWork Conecta é uma rede compartilhada,
+            sem banda individual garantida, destinada ao uso profissional cotidiano e sujeita às
+            condições previstas no contrato da empresa, nos Termos de Uso e na Política de Uso da Rede.
+          </p>
+        </div>
+        <nav class="legal__links" aria-label="Documentos legais">
+          <a class="footer-link" href="#" data-terms>Termos de Uso</a>
+          <a class="footer-link" href="#" data-policy>Política de Uso da Rede</a>
+          <a class="footer-link" href="#" data-privacy>Política de Privacidade</a>
+        </nav>
+      </section>
+    </main>
+  </div>
+  <script src="assets/js/md5.js"></script>
+  <script>
+    /* chap-id / chap-challenge precisam estar no HTML — o RouterOS não reescreve app.js */
+    window.GOWORK_HOTSPOT = {
+      chapId: "$(chap-id)",
+      chapChallenge: "$(chap-challenge)"
+    };
+  </script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+  
+</body>
+</html>

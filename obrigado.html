@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3f76ff">
+  <title>GoWork Pro — Interesse registrado</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="bg-layers" aria-hidden="true">
+      <div class="login-grid"></div>
+      <div class="login-blob" style="top:-6rem;left:-6rem;width:26rem;height:26rem;background:radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--blue) 55%, transparent), transparent 70%)"></div>
+      <div class="login-blob" style="bottom:-8rem;right:-6rem;width:30rem;height:30rem;background:radial-gradient(circle at 70% 70%, color-mix(in srgb, var(--cyan) 55%, transparent), transparent 70%);animation-delay:-6s"></div>
+    </div>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" data-href="index.html" aria-label="GoWork">
+          <img class="brand__symbol" src="assets/img/gowork-mark.png" alt="">
+          <span class="brand__wordmark" aria-hidden="true"><strong>GO</strong><span>WORK.</span></span>
+        </a>
+        <div class="status-pill" data-short="GoWork" role="status">Portal Wi-Fi GoWork</div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1 id="thanks-title">Interesse <span class="gradient-text">registrado</span></h1>
+        <p class="hero__lead" id="thanks-copy">Recebemos seus dados. A equipe comercial entra em contato se houver disponibilidade e encaixe. Nada foi contratado ou ativado.</p>
+      </section>
+      <article class="form-section" style="max-width:40rem;margin:28px auto 0">
+        <div class="notice notice--ok" id="thanks-box">Obrigado. Seu registro entra na mensuração de demanda do GoWork Pro.</div>
+        <a class="cta" data-href="index.html">Voltar ao início</a>
+      </article>
+    </main>
+  </div>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+  
+<script>
+(function () {
+  const plan = window.GoworkPro.qs("plano");
+  const title = document.getElementById("thanks-title");
+  const copy = document.getElementById("thanks-copy");
+  const box = document.getElementById("thanks-box");
+  if (plan === "conecta") {
+    title.innerHTML = "Você escolheu o <span class=\"gradient-text\">GoWork Conecta</span>";
+    copy.textContent = "A rede compartilhada da unidade está liberada para o uso previsto no contrato. Se a operação precisar de mais performance, o GoWork Pro continua disponível.";
+    box.textContent = "Boa conexão. Em caso de instabilidade persistente, fale com a recepção da unidade.";
+  } else if (plan === "corporate") {
+    title.innerHTML = "Diagnóstico <span class=\"gradient-text\">enviado</span>";
+    copy.textContent = "Comercial e TI analisam o pedido em conjunto. Vocês serão contactados com os próximos passos — sem ativação automática.";
+  } else if (plan === "day") {
+    title.innerHTML = "Interesse no <span class=\"gradient-text\">Pro Day</span> registrado";
+  } else if (plan === "mensal") {
+    title.innerHTML = "Interesse no <span class=\"gradient-text\">Pro Mensal</span> registrado";
+  }
+})();
+</script>
+
+</body>
+</html>

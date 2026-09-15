@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+.netlify/
+*.log
+# cópia do portal do roteador — gerada, não versionar o config preenchido
+/dist-router/

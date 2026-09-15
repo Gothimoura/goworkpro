@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3f76ff">
+  <title>GoWork Pro — Solicitar Day ou Mensal</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="bg-layers" aria-hidden="true">
+      <div class="login-grid"></div>
+      <div class="login-blob" style="top:-6rem;left:-6rem;width:26rem;height:26rem;background:radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--blue) 55%, transparent), transparent 70%)"></div>
+      <div class="login-blob" style="bottom:-8rem;right:-6rem;width:30rem;height:30rem;background:radial-gradient(circle at 70% 70%, color-mix(in srgb, var(--cyan) 55%, transparent), transparent 70%);animation-delay:-6s"></div>
+    </div>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" data-href="index.html" aria-label="GoWork">
+          <img class="brand__symbol" src="assets/img/gowork-mark.png" alt="">
+          <span class="brand__wordmark" aria-hidden="true"><strong>GO</strong><span>WORK.</span></span>
+        </a>
+        <div class="status-pill" data-short="Interesse" role="status">Interesse comercial · GoWork Pro</div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>Solicitar GoWork Pro <span class="gradient-text">Day ou Mensal</span></h1>
+        <p class="hero__lead">O envio <strong>não conclui a compra</strong>. A contratação depende de disponibilidade na unidade, validação comercial e formalização.</p>
+      </section>
+
+      <form class="form-section" id="lead-form" name="gowork-pro-day-mensal" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" novalidate style="margin-top:28px">
+        <input type="hidden" name="form-name" value="gowork-pro-day-mensal">
+        <p class="honeypot">
+          <label>Não preencha este campo <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+        <div>
+          <p class="group-label">Qual plano você quer?</p>
+          <div class="chips" role="group" aria-label="Escolher plano">
+            <button type="button" class="chip" data-plan="day">Pro Day · R$ 30 / 24h</button>
+            <button type="button" class="chip" data-plan="mensal">Pro Mensal · R$ 300 / mês</button>
+          </div>
+          <input type="hidden" name="plano" id="plano" value="day">
+        </div>
+
+        <div class="form-grid" style="margin-top:22px">
+          <div class="field"><label for="nome">Nome do solicitante<span class="required">*</span></label><input id="nome" name="nome" required autocomplete="name"></div>
+          <div class="field"><label for="email">E-mail<span class="required">*</span></label><input id="email" name="email" type="email" required autocomplete="email"></div>
+          <div class="field"><label for="whatsapp">WhatsApp<span class="required">*</span></label><input id="whatsapp" name="whatsapp" inputmode="tel" required autocomplete="tel" placeholder="(11) 90000-0000"></div>
+          <div class="field"><label for="empresa">Empresa<span class="required" data-plan-mode="mensal">*</span> <span style="color:var(--muted);font-weight:500" data-plan-mode="day">(opcional no Day)</span></label><input id="empresa" name="empresa" autocomplete="organization"></div>
+          <div class="field"><label for="unidade">Unidade GoWork<span class="required">*</span></label><select id="unidade" name="unidade" required><option value="">Selecione</option></select></div>
+          <div class="field" data-plan-mode="mensal"><label for="cargo">Cargo<span class="required">*</span></label><input id="cargo" name="cargo" data-keep-required></div>
+          <div class="field" data-plan-mode="mensal"><label for="sala">Sala</label><input id="sala" name="sala"></div>
+          <div class="field" data-plan-mode="mensal"><label for="quantidade_usuarios">Quantidade de usuários<span class="required">*</span></label><input id="quantidade_usuarios" name="quantidade_usuarios" type="number" min="1" step="1" data-keep-required></div>
+          <div class="field" data-plan-mode="mensal"><label for="data_desejada">Data desejada<span class="required">*</span></label><input id="data_desejada" name="data_desejada" type="date" data-keep-required></div>
+          <div class="field" data-plan-mode="mensal"><label for="papel_decisao">Participação na decisão<span class="required">*</span></label>
+            <select id="papel_decisao" name="papel_decisao" data-keep-required>
+              <option value="">Selecione</option>
+              <option>Decisor</option>
+              <option>Influenciador</option>
+              <option>Usuário / solicitante operacional</option>
+              <option>Financeiro / compras</option>
+            </select>
+          </div>
+          <div class="field span-2" data-plan-mode="mensal"><label for="observacoes">Observações</label><textarea id="observacoes" name="observacoes" placeholder="Horários críticos, sistemas usados, restrições…"></textarea></div>
+        </div>
+
+        <div class="revenue">
+          <span>Potencial de receita estimado<br><span style="color:var(--muted);font-size:12px">Day = R$ 30 × usuários · Mensal = R$ 300 × usuários × 12</span></span>
+          <strong class="price" id="receita">—</strong>
+        </div>
+        <div class="warning-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.7 20h18.6L12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17.1" r="1" fill="currentColor"/></svg>
+          <p>Este formulário registra interesse para o MVP. Ninguém será cobrado e nenhum serviço será ativado automaticamente.</p>
+        </div>
+        <p class="form-error" id="form-error"></p>
+        <div class="form-actions">
+          <a class="btn btn--ghost" data-href="planos.html">Voltar aos planos</a>
+          <button class="btn" type="submit" id="submit">Enviar interesse</button>
+        </div>
+      </form>
+    </main>
+  </div>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+  
+<script>
+(function () {
+  const G = window.GoworkPro;
+  const form = document.getElementById("lead-form");
+  const planInput = document.getElementById("plano");
+  const chips = document.querySelectorAll("[data-plan]");
+  const users = document.getElementById("quantidade_usuarios");
+  const revenueEl = document.getElementById("receita");
+  const err = document.getElementById("form-error");
+  const submit = document.getElementById("submit");
+
+  function setPlan(plan) {
+    planInput.value = plan;
+    chips.forEach(function (c) {
+      c.setAttribute("aria-pressed", c.getAttribute("data-plan") === plan ? "true" : "false");
+    });
+    G.setPlanMode(plan);
+    document.getElementById("empresa").required = plan === "mensal";
+    if (plan === "day" && (!users.value || Number(users.value) < 1)) users.value = "1";
+    refreshRevenue();
+  }
+
+  function refreshRevenue() {
+    const value = G.potential(planInput.value, users.value);
+    revenueEl.textContent = value ? G.money(value) : "—";
+  }
+
+  chips.forEach(function (c) {
+    c.addEventListener("click", function () { setPlan(c.getAttribute("data-plan")); });
+  });
+  users.addEventListener("input", refreshRevenue);
+  G.fillUnits(document.getElementById("unidade"));
+  G.bindPhone(document.getElementById("whatsapp"));
+  setPlan(G.qs("plano") === "mensal" ? "mensal" : "day");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    err.dataset.show = "0";
+    if (!form.reportValidity()) return;
+    const payload = G.formToObject(form);
+    payload.plano = planInput.value;
+    payload.nome_solicitante = payload.nome;
+    payload.telefone = payload.whatsapp;
+    payload.potencial_receita = G.potential(payload.plano, payload.quantidade_usuarios || 1);
+    payload.potencial_receita_formatado = G.money(payload.potencial_receita);
+    submit.disabled = true;
+    submit.textContent = "Enviando…";
+    try {
+      await G.submitLead("day-mensal", payload);
+      G.goThanks(payload.plano);
+    } catch (ex) {
+      err.textContent = ex.message || "Não foi possível enviar. Tente de novo.";
+      err.dataset.show = "1";
+      submit.disabled = false;
+      submit.textContent = "Enviar interesse";
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

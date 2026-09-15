@@ -1,0 +1,62 @@
+# GoWork Pro - configuração de deploy Netlify
+# Projeto estático puro: sem build, publica a raiz como está.
+
+[build]
+  publish = "."
+  command = ""
+
+# URLs limpas: /planos em vez de /planos.html
+[[redirects]]
+  from = "/planos"
+  to = "/planos.html"
+  status = 200
+[[redirects]]
+  from = "/formulario"
+  to = "/formulario.html"
+  status = 200
+[[redirects]]
+  from = "/corporate"
+  to = "/corporate.html"
+  status = 200
+[[redirects]]
+  from = "/obrigado"
+  to = "/obrigado.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Assets versionados podem ter cache longo.
+# Mantido curto por enquanto: o MVP ainda vai mudar bastante.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
+
+# config.js NUNCA pode ser cacheado: é o arquivo que troca entre
+# a cópia do roteador e a cópia do Netlify.
+[[headers]]
+  for = "/assets/js/config.js"
+  [headers.values]
+    Cache-Control = "no-store, must-revalidate"
+
+[[redirects]]
+  from = "/termos"
+  to = "/termos.html"
+  status = 200
+[[redirects]]
+  from = "/politica-rede"
+  to = "/politica-rede.html"
+  status = 200
+[[redirects]]
+  from = "/privacidade"
+  to = "/privacidade.html"
+  status = 200
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200

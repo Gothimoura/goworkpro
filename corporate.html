@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3f76ff">
+  <title>GoWork Pro Corporate — Diagnóstico</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="bg-layers" aria-hidden="true">
+      <div class="login-grid"></div>
+      <div class="login-blob" style="top:-6rem;left:-6rem;width:26rem;height:26rem;background:radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--blue) 55%, transparent), transparent 70%)"></div>
+      <div class="login-blob" style="bottom:-8rem;right:-6rem;width:30rem;height:30rem;background:radial-gradient(circle at 70% 70%, color-mix(in srgb, var(--cyan) 55%, transparent), transparent 70%);animation-delay:-6s"></div>
+    </div>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" data-href="index.html" aria-label="GoWork">
+          <img class="brand__symbol" src="assets/img/gowork-mark.png" alt="">
+          <span class="brand__wordmark" aria-hidden="true"><strong>GO</strong><span>WORK.</span></span>
+        </a>
+        <div class="status-pill" data-short="Corporate" role="status">Diagnóstico GoWork Pro Corporate</div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero hero--split" aria-labelledby="page-title">
+        <div>
+          <h1 id="page-title">GoWork Pro <span class="gradient-text">Corporate</span></h1>
+          <h2 style="margin-top:10px;font-size:clamp(1.25rem,2.5vw,1.8rem)">Solução sob medida para a sua empresa</h2>
+          <p>Responda ao diagnóstico abaixo. Nossa equipe técnica e comercial analisará sua operação, a infraestrutura da unidade e as alternativas mais adequadas para o projeto.</p>
+        </div>
+        <div class="hero__visual" aria-hidden="true">
+          <svg class="hero__wifi" viewBox="0 0 100 78"><path d="M8 25c24-22 60-22 84 0M23 41c16-14 38-14 54 0M38 57c7-6 17-6 24 0" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="69" r="6" fill="currentColor"/></svg>
+          <div class="hero__buildings"><div class="hero__building"></div><div class="hero__building"></div><div class="hero__building"></div></div>
+        </div>
+      </section>
+
+      <form id="corp-form" name="gowork-pro-corporate" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="gowork-pro-corporate">
+        <p class="honeypot">
+          <label>Não preencha este campo <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+        <section class="form-section">
+          <div class="section-title"><span class="section-number">1</span><h3>Sua empresa e responsáveis</h3></div>
+          <p class="section-help">Dados para identificação, contato e dimensionamento inicial.</p>
+          <div class="form-grid">
+            <div class="field"><label for="nome_solicitante">Nome do solicitante<span class="required">*</span></label><input id="nome_solicitante" name="nome_solicitante" required autocomplete="name"></div>
+            <div class="field"><label for="cargo_solicitante">Cargo / função<span class="required">*</span></label><input id="cargo_solicitante" name="cargo_solicitante" required></div>
+            <div class="field"><label for="email">E-mail corporativo<span class="required">*</span></label><input id="email" name="email" type="email" required autocomplete="email"></div>
+            <div class="field"><label for="telefone">WhatsApp / telefone<span class="required">*</span></label><input id="telefone" name="telefone" type="tel" required autocomplete="tel"></div>
+            <div class="field"><label for="empresa">Empresa<span class="required">*</span></label><input id="empresa" name="empresa" required autocomplete="organization"></div>
+            <div class="field"><label for="unidade">Unidade GoWork<span class="required">*</span></label><select id="unidade" name="unidade" required><option value="">Selecione a unidade</option></select></div>
+            <div class="field"><label for="sala">Sala / conjunto</label><input id="sala" name="sala" placeholder="Ex.: 301, 12B ou Sala 5"></div>
+            <div class="field"><label for="responsavel_decisao">Responsável pela decisão<span class="required">*</span></label><input id="responsavel_decisao" name="responsavel_decisao" required></div>
+            <div class="field"><label for="cargo_responsavel">Cargo do responsável</label><input id="cargo_responsavel" name="cargo_responsavel"></div>
+            <div class="field"><label for="total_usuarios">Total de usuários<span class="required">*</span></label><input id="total_usuarios" name="total_usuarios" type="number" min="1" required></div>
+            <div class="field"><label for="total_dispositivos">Dispositivos conectados, aproximadamente<span class="required">*</span></label><input id="total_dispositivos" name="total_dispositivos" type="number" min="1" required></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-title"><span class="section-number">2</span><h3>Como sua empresa utiliza a internet?</h3></div>
+          <p class="section-help">Marque todas as atividades que fazem parte da operação.</p>
+          <div class="check-grid">
+<label class="check-option"><input type="checkbox" name="usos" value="VPN e acesso remoto"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>VPN e acesso remoto</span></span></label>
+<label class="check-option"><input type="checkbox" name="usos" value="Videoconferências simultâneas"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Videoconferências simultâneas</span></span></label>
+<label class="check-option"><input type="checkbox" name="usos" value="Telefonia VoIP ou call center"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Telefonia VoIP / call center</span></span></label>
+<label class="check-option"><input type="checkbox" name="usos" value="Servidores ou sistemas em nuvem"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Servidores ou sistemas em nuvem</span></span></label>
+<label class="check-option"><input type="checkbox" name="usos" value="Transferência de arquivos grandes"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Transferência de arquivos grandes</span></span></label>
+<label class="check-option"><input type="checkbox" name="usos" value="Backups em nuvem"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Backups em nuvem</span></span></label>
+<label class="check-option"><input type="checkbox" name="usos" value="Transmissão de vídeos ou lives"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Transmissão de vídeos / lives</span></span></label>
+<label class="check-option"><input type="checkbox" name="usos" value="Acesso a sistemas críticos"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Acesso a sistemas críticos</span></span></label>
+<label class="check-option"><input type="checkbox" name="usos" value="Uso fora do horário comercial"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Uso fora do horário comercial</span></span></label>
+</div>
+          <div class="form-grid" style="margin-top:20px">
+            <div class="field"><label for="reunioes_simultaneas">Quantas reuniões online podem ocorrer simultaneamente?</label><input id="reunioes_simultaneas" name="reunioes_simultaneas" type="number" min="0"></div>
+            <div class="field"><span class="group-label">A empresa possui equipe própria de TI?</span>
+              <div class="inline-radio">
+                <label><input type="radio" name="equipe_ti" value="Sim"> Sim</label>
+                <label><input type="radio" name="equipe_ti" value="Não"> Não</label>
+              </div>
+            </div>
+            <div class="field span-2"><label for="impacto_parada">O que acontece se a internet parar?</label>
+              <select id="impacto_parada" name="impacto_parada">
+                <option value="">Selecione</option>
+                <option>Baixo impacto</option>
+                <option>Redução de produtividade</option>
+                <option>Parte da operação para</option>
+                <option>Toda a operação para</option>
+                <option>Há risco financeiro, contratual ou reputacional</option>
+              </select>
+            </div>
+            <div class="field span-2"><label for="outros_usos">Outras atividades ou particularidades da operação</label><textarea id="outros_usos" name="outros_usos"></textarea></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-title"><span class="section-number">3</span><h3>Qual infraestrutura sua empresa precisa ou deseja avaliar?</h3></div>
+          <p class="section-help">Marque os recursos desejados. Caso não saiba, escolha a opção de orientação.</p>
+          <div class="check-grid">
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Link dedicado"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Link dedicado</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Segundo link de redundância"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Segundo link / redundância</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Rede ou VLAN segregada"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Rede / VLAN segregada</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Wi-Fi exclusivo"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Wi-Fi exclusivo</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="IP público fixo"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>IP público fixo</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Firewall e segurança"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Firewall / segurança</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Pontos cabeados"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Pontos cabeados</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Controle de acesso por usuário"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Controle de acesso por usuário</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Monitoramento"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Monitoramento</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Suporte prioritário"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Suporte prioritário</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="SLA"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>SLA / acordo de nível de serviço</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Integração com equipamentos próprios"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Integração com equipamentos próprios</span></span></label>
+<label class="check-option"><input type="checkbox" name="infraestrutura" value="Preciso de orientação"><span class="check-option__body"><span class="check-box"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Não sei, preciso de orientação</span></span></label>
+</div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-title"><span class="section-number">4</span><h3>Informações adicionais e implantação</h3></div>
+          <p class="section-help">Prazo, crescimento esperado e principal problema que o projeto deve resolver.</p>
+          <div class="form-grid">
+            <div class="field"><label for="data_implantacao">Data desejada para implantação</label><input id="data_implantacao" name="data_implantacao" type="date"></div>
+            <div class="field"><label for="prazo_uso">Prazo estimado de uso</label>
+              <select id="prazo_uso" name="prazo_uso">
+                <option value="">Selecione</option>
+                <option>Até 6 meses</option>
+                <option>De 6 a 12 meses</option>
+                <option>De 12 a 24 meses</option>
+                <option>Acima de 24 meses</option>
+                <option>Indeterminado</option>
+              </select>
+            </div>
+            <div class="field"><label for="previsao_crescimento">Previsão de crescimento da equipe</label>
+              <select id="previsao_crescimento" name="previsao_crescimento">
+                <option value="">Selecione</option>
+                <option>Sem crescimento previsto</option>
+                <option>Até 20%</option>
+                <option>De 20% a 50%</option>
+                <option>Acima de 50%</option>
+                <option>Ainda não sabemos</option>
+              </select>
+            </div>
+            <div class="field"><label for="solucao_atual">Operadora ou solução atual</label><input id="solucao_atual" name="solucao_atual"></div>
+            <div class="field"><label for="suporte_fora_horario">Necessidade de suporte fora do horário comercial?</label>
+              <select id="suporte_fora_horario" name="suporte_fora_horario">
+                <option value="">Selecione</option>
+                <option>Não</option>
+                <option>Eventualmente</option>
+                <option>Sim, recorrente</option>
+                <option>Preciso de atendimento 24x7</option>
+              </select>
+            </div>
+            <div class="field span-2"><label for="problema_principal">Principal problema que deseja resolver<span class="required">*</span></label><textarea id="problema_principal" name="problema_principal" required></textarea></div>
+            <div class="field span-2"><label for="observacoes">Observações adicionais</label><textarea id="observacoes" name="observacoes" maxlength="1000"></textarea></div>
+          </div>
+        </section>
+
+        <div class="notice">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 10.6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.1" fill="currentColor"/></svg>
+          <p>Ao enviar este formulário, você autoriza a GoWork a utilizar os dados informados para contato e análise da solicitação. O envio não conclui a contratação, que dependerá de análise técnica, disponibilidade na unidade, condições comerciais e formalização do projeto.</p>
+        </div>
+        <p class="form-error" id="form-error"></p>
+        <div class="actions">
+          <a class="btn btn--ghost" data-href="planos.html">Voltar aos planos</a>
+          <button class="btn" type="submit" id="submit">Enviar para análise técnica</button>
+        </div>
+        <p class="footnote">Os dados serão utilizados exclusivamente para atendimento, diagnóstico e elaboração da proposta.</p>
+      </form>
+    </main>
+  </div>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+  
+<script>
+(function () {
+  const G = window.GoworkPro;
+  const form = document.getElementById("corp-form");
+  const err = document.getElementById("form-error");
+  const submit = document.getElementById("submit");
+  const date = document.getElementById("data_implantacao");
+  G.fillUnits(document.getElementById("unidade"));
+  G.bindPhone(document.getElementById("telefone"));
+  if (date) {
+    const t = new Date();
+    date.min = new Date(t.getTime() - t.getTimezoneOffset() * 60000).toISOString().split("T")[0];
+  }
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    err.dataset.show = "0";
+    if (!form.reportValidity()) return;
+    const payload = G.formToObject(form);
+    payload.plano = "corporate";
+    payload.nome = payload.nome_solicitante;
+    payload.whatsapp = payload.telefone;
+    payload.cargo = payload.cargo_solicitante;
+    payload.destino = "Comercial + TI";
+    submit.disabled = true;
+    submit.textContent = "Enviando…";
+    try {
+      await G.submitLead("corporate", payload);
+      G.goThanks("corporate");
+    } catch (ex) {
+      err.textContent = ex.message || "Não foi possível enviar. Tente de novo.";
+      err.dataset.show = "1";
+      submit.disabled = false;
+      submit.textContent = "Enviar para análise técnica";
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
