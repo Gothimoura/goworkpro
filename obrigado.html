@@ -5,7 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#3f76ff">
   <title>GoWork Pro — Interesse registrado</title>
-  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/app.css?v=4">
+  <style>
+    /* Selo de confirmação — específico desta tela, não existe no design system. */
+    .done{display:grid;place-items:center;gap:1.1rem;text-align:center;padding:.5rem 0 0}
+    .done__mark{position:relative;width:5.25rem;height:5.25rem;display:grid;place-items:center;
+      border-radius:50%;background:color-mix(in srgb,var(--success) 12%,#fff);
+      border:1px solid color-mix(in srgb,var(--success) 32%,transparent)}
+    .done__mark svg{width:2.5rem;height:2.5rem;color:var(--success)}
+    .done__mark::after{content:"";position:absolute;inset:-.55rem;border-radius:50%;
+      border:1px solid color-mix(in srgb,var(--success) 26%,transparent);
+      animation:done-pulse 2.6s ease-out infinite}
+    @keyframes done-pulse{0%{transform:scale(.92);opacity:.85}70%{transform:scale(1.08);opacity:0}100%{opacity:0}}
+    .done__mark svg path{stroke-dasharray:28;stroke-dashoffset:28;animation:done-draw .55s .15s ease-out forwards}
+    @keyframes done-draw{to{stroke-dashoffset:0}}
+    @media (prefers-reduced-motion:reduce){
+      .done__mark::after{animation:none}
+      .done__mark svg path{animation:none;stroke-dashoffset:0}
+    }
+    .done h1{margin:0;font-size:1.9rem;font-weight:650;letter-spacing:-.025em;line-height:1.15}
+    .done__lead{margin:0;max-width:34rem;color:var(--muted);font-size:1rem;line-height:1.55}
+
+    /* Trilha "o que acontece agora" */
+    .steps{list-style:none;margin:0;padding:0;display:grid;gap:.9rem;counter-reset:s}
+    .steps li{display:grid;grid-template-columns:1.6rem 1fr;gap:.75rem;align-items:start;
+      font-size:.92rem;line-height:1.5;color:var(--text)}
+    .steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;
+      width:1.6rem;height:1.6rem;border-radius:50%;font-size:.72rem;font-weight:650;
+      color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,#fff);
+      border:1px solid color-mix(in srgb,var(--blue) 26%,transparent)}
+    .steps b{font-weight:600}
+
+    /* Faixa de status da rede */
+    .netline{display:flex;align-items:center;gap:.65rem;margin-top:.25rem;padding:.7rem .9rem;
+      border-radius:.7rem;font-size:.88rem;font-weight:500;
+      border:1px solid color-mix(in srgb,var(--success) 30%,transparent);
+      background:color-mix(in srgb,var(--success) 7%,#fff);color:var(--success)}
+    .netline__dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--success);flex:0 0 auto;
+      box-shadow:0 0 0 0 color-mix(in srgb,var(--success) 55%,transparent);animation:netpulse 2s infinite}
+    @keyframes netpulse{70%{box-shadow:0 0 0 .5rem transparent}100%{box-shadow:0 0 0 0 transparent}}
+    @media (prefers-reduced-motion:reduce){.netline__dot{animation:none}}
+
+    .done-card{max-width:38rem;margin:1.75rem auto 0}
+    .done-card .actions{margin-top:.35rem}
+    @media (max-width:520px){
+      .done h1{font-size:1.6rem}
+      .done-card .actions .cta{width:100%}
+    }
+  </style>
 </head>
 <body>
   <div class="app-shell">
@@ -14,6 +61,7 @@
       <div class="login-blob" style="top:-6rem;left:-6rem;width:26rem;height:26rem;background:radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--blue) 55%, transparent), transparent 70%)"></div>
       <div class="login-blob" style="bottom:-8rem;right:-6rem;width:30rem;height:30rem;background:radial-gradient(circle at 70% 70%, color-mix(in srgb, var(--cyan) 55%, transparent), transparent 70%);animation-delay:-6s"></div>
     </div>
+
     <header class="topbar">
       <div class="topbar__inner">
         <a class="brand" data-href="index.html" aria-label="GoWork">
@@ -25,39 +73,121 @@
     </header>
 
     <main class="wrap">
-      <section class="hero">
+      <section class="done">
+        <div class="done__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.2L19 7.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="eyebrow" id="done-eyebrow">Cadastro concluído</div>
         <h1 id="thanks-title">Interesse <span class="gradient-text">registrado</span></h1>
-        <p class="hero__lead" id="thanks-copy">Recebemos seus dados. A equipe comercial entra em contato se houver disponibilidade e encaixe. Nada foi contratado ou ativado.</p>
+        <p class="done__lead" id="thanks-copy">Recebemos seus dados. A equipe comercial entra em contato se houver disponibilidade e encaixe.</p>
       </section>
-      <article class="form-section" style="max-width:40rem;margin:28px auto 0">
-        <div class="notice notice--ok" id="thanks-box">Obrigado. Seu registro entra na mensuração de demanda do GoWork Pro.</div>
-        <a class="cta" data-href="index.html">Voltar ao início</a>
+
+      <article class="form-section done-card">
+        <div class="netline" id="netline">
+          <span class="netline__dot" aria-hidden="true"></span>
+          <span id="netline-text">Acesso à rede liberado — você já pode navegar.</span>
+        </div>
+
+        <h2 style="margin:.35rem 0 0;font-size:1.05rem;font-weight:620;letter-spacing:-.01em">O que acontece agora</h2>
+        <ol class="steps" id="steps"></ol>
+
+        <div class="actions">
+          <a class="cta" data-href="planos.html">Ver os planos</a>
+          <a class="cta btn--ghost" data-href="index.html">Voltar ao início</a>
+        </div>
       </article>
+
+      <p class="footnote" id="thanks-foot">Nada foi contratado ou ativado. Este registro mede a demanda pelo GoWork Pro.</p>
     </main>
   </div>
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/app.js"></script>
-  
-<script>
-(function () {
-  const plan = window.GoworkPro.qs("plano");
-  const title = document.getElementById("thanks-title");
-  const copy = document.getElementById("thanks-copy");
-  const box = document.getElementById("thanks-box");
-  if (plan === "conecta") {
-    title.innerHTML = "Você escolheu o <span class=\"gradient-text\">GoWork Conecta</span>";
-    copy.textContent = "A rede compartilhada da unidade está liberada para o uso previsto no contrato. Se a operação precisar de mais performance, o GoWork Pro continua disponível.";
-    box.textContent = "Boa conexão. Em caso de instabilidade persistente, fale com a recepção da unidade.";
-  } else if (plan === "corporate") {
-    title.innerHTML = "Diagnóstico <span class=\"gradient-text\">enviado</span>";
-    copy.textContent = "Comercial e TI analisam o pedido em conjunto. Vocês serão contactados com os próximos passos — sem ativação automática.";
-  } else if (plan === "day") {
-    title.innerHTML = "Interesse no <span class=\"gradient-text\">Pro Day</span> registrado";
-  } else if (plan === "mensal") {
-    title.innerHTML = "Interesse no <span class=\"gradient-text\">Pro Mensal</span> registrado";
-  }
-})();
-</script>
 
+  <script src="assets/js/config.js?v=4"></script>
+  <script src="assets/js/app.js?v=4"></script>
+  <script>
+  (function () {
+    const G = window.GoworkPro;
+    const plan = G.qs("plano");
+
+    /* Conteúdo por plano. Mantém o texto original de cada variante e acrescenta
+       a trilha de próximos passos, que antes não existia. */
+    const V = {
+      conecta: {
+        eyebrow: "Acesso liberado",
+        title: 'Você escolheu o <span class="gradient-text">GoWork Conecta</span>',
+        lead: "A rede compartilhada da unidade está liberada para o uso previsto no contrato. Se a operação precisar de mais performance, o GoWork Pro continua disponível.",
+        net: "Conectado à rede compartilhada da unidade.",
+        steps: [
+          "<b>Navegue normalmente.</b> Seu acesso já está ativo nesta unidade.",
+          "<b>Instabilidade persistente?</b> Fale com a recepção — eles registram o chamado.",
+          "<b>Precisa de mais banda?</b> Os planos Pro ficam disponíveis a qualquer momento.",
+        ],
+        foot: "Uso sujeito à Política de Uso da Rede da unidade.",
+      },
+      corporate: {
+        eyebrow: "Diagnóstico enviado",
+        title: 'Diagnóstico <span class="gradient-text">enviado</span>',
+        lead: "Comercial e TI analisam o pedido em conjunto. Vocês serão contactados com os próximos passos — sem ativação automática.",
+        steps: [
+          "<b>Análise conjunta.</b> Comercial e TI avaliam o cenário descrito.",
+          "<b>Contato em até 2 dias úteis</b> pelo e-mail e WhatsApp informados.",
+          "<b>Proposta sob medida.</b> Escopo, prazo e investimento conforme o diagnóstico.",
+        ],
+      },
+      day: {
+        eyebrow: "Interesse registrado",
+        title: 'Interesse no <span class="gradient-text">Pro Day</span> registrado',
+        steps: [
+          "<b>Verificação de disponibilidade</b> na sua unidade.",
+          "<b>Contato da equipe</b> pelo WhatsApp informado.",
+          "<b>Ativação por 24h</b> após confirmação — sem compromisso mensal.",
+        ],
+      },
+      mensal: {
+        eyebrow: "Interesse registrado",
+        title: 'Interesse no <span class="gradient-text">Pro Mensal</span> registrado',
+        steps: [
+          "<b>Verificação de disponibilidade</b> na sua unidade.",
+          "<b>Contato da equipe</b> para alinhar usuários e data de início.",
+          "<b>Ativação recorrente</b> após confirmação — mínimo de 12 meses.",
+        ],
+      },
+    };
+
+    const base = {
+      steps: [
+        "<b>Recebemos seu cadastro.</b> Ele já está na fila de análise.",
+        "<b>A equipe comercial avalia</b> disponibilidade e encaixe.",
+        "<b>Entramos em contato</b> pelos dados que você informou.",
+      ],
+    };
+    const v = Object.assign({}, base, V[plan] || {});
+
+    const set = (id, html) => { const el = document.getElementById(id); if (el && html) el.innerHTML = html; };
+    set("done-eyebrow", v.eyebrow);
+    set("thanks-title", v.title);
+    set("thanks-copy", v.lead);
+    set("netline-text", v.net);
+    set("thanks-foot", v.foot);
+
+    document.getElementById("steps").innerHTML =
+      v.steps.map((s) => "<li>" + s + "</li>").join("");
+
+    /* A faixa verde só faz sentido para quem realmente saiu daqui com acesso —
+       ou seja, quem veio pelo portal. Fora do hotspot ela some. */
+    try {
+      if (sessionStorage.getItem("gowork-hotspot-origin") !== "1") {
+        document.getElementById("netline").hidden = true;
+      }
+    } catch (e) {
+      document.getElementById("netline").hidden = true;
+    }
+
+    /* Quem já é Conecta não precisa do CTA de planos em destaque. */
+    if (plan === "conecta") {
+      const cta = document.querySelector('.actions .cta[data-href="planos.html"]');
+      if (cta) cta.classList.add("btn--ghost");
+    }
+  })();
+  </script>
 </body>
 </html>
