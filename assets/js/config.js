@@ -11,7 +11,7 @@ window.GOWORK_PRO_CONFIG = {
   hotspotLoginUrl: "http://192.168.33.1/login",
   leadUsername: "lead",
   leadPassword: "gowork-lead",
-  webhookUrl: "",
+  webhookUrl: "https://flux.gowork.com.br/webhook/gowork-pro-lead-teste",
   hubspotPortalId: "",
   hubspotFormIdDayMensal: "",
   hubspotFormIdCorporate: "",

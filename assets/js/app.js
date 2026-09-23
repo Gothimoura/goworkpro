@@ -225,13 +225,20 @@
     const stamped = stampLead(payload.plano || kind, payload);
 
     if (cfg.webhookUrl) {
-      const res = await fetch(cfg.webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(stamped),
-      });
-      if (!res.ok) throw new Error("Falha no webhook (" + res.status + ").");
-      return;
+      /* Se o webhook responder, acabou aqui. Se cair (n8n fora do ar, CORS,
+         workflow desativado), NÃO perdemos o lead: seguimos para o próximo
+         destino da cascata em vez de estourar erro para o visitante. */
+      try {
+        const res = await fetch(cfg.webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(stamped),
+        });
+        if (res.ok) return;
+        console.warn("Webhook respondeu " + res.status + " — usando destino reserva.");
+      } catch (ex) {
+        console.warn("Webhook inacessível — usando destino reserva.", ex);
+      }
     }
 
     const formId = kind === "corporate" ? cfg.hubspotFormIdCorporate : cfg.hubspotFormIdDayMensal;
