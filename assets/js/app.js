@@ -9,19 +9,31 @@
   const HS_FLAG = "gowork-hotspot-origin";
   const HS_MAC = "gowork-hotspot-mac";
 
-  /* RouterOS às vezes devolve lixo no $(mac) depois do redirect do login.
-     Só aceita AA:BB:CC:DD:EE:FF, AA-BB-CC-DD-EE-FF ou 12 hex. */
-  function isValidMac(value) {
-    const v = String(value || "").trim();
-    return /^([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$/i.test(v) || /^[0-9a-f]{12}$/i.test(v);
+  /* Aceita MAC cru, com : ou -, e desfaz %3A / %253A (encode duplo no dst). */
+  function normalizeMac(value) {
+    let v = String(value || "").trim();
+    if (!v || v.indexOf("$(") !== -1) return "";
+    for (let i = 0; i < 3; i++) {
+      try {
+        if (!/%[0-9a-fA-F]{2}/.test(v)) break;
+        const next = decodeURIComponent(v);
+        if (next === v) break;
+        v = next;
+      } catch (e) {
+        break;
+      }
+    }
+    const hex = v.replace(/[^0-9a-fA-F]/g, "");
+    if (hex.length !== 12) return "";
+    return hex.replace(/(.{2})(?=.)/g, "$1:").toUpperCase();
   }
 
   function setHotspotOrigin() {
     try {
       const p = new URLSearchParams(location.search);
       if (p.get("hs") === "1") sessionStorage.setItem(HS_FLAG, "1");
-      const m = p.get("mac");
-      if (isValidMac(m)) sessionStorage.setItem(HS_MAC, m);
+      const m = normalizeMac(p.get("mac"));
+      if (m) sessionStorage.setItem(HS_MAC, m);
     } catch (e) {
       /* navegador sem sessionStorage: segue sem a marca */
     }
@@ -31,10 +43,10 @@
      vem da URL/sessão. Literal ou valor inválido é descartado. */
   function hotspotMac() {
     const hs = window.GOWORK_HOTSPOT || {};
-    if (hs.mac && !isMikrotikLiteral(hs.mac) && isValidMac(hs.mac)) return hs.mac;
+    const fromHs = normalizeMac(hs.mac);
+    if (fromHs) return fromHs;
     try {
-      const stored = sessionStorage.getItem(HS_MAC) || "";
-      return isValidMac(stored) ? stored : "";
+      return normalizeMac(sessionStorage.getItem(HS_MAC) || "");
     } catch (e) {
       return "";
     }
@@ -53,11 +65,23 @@
     return url + (url.indexOf("?") === -1 ? "?" : "&") + key + "=" + encodeURIComponent(value);
   }
 
+  /* URLSearchParams encodeia uma vez. Concatenar encodeURIComponent + qs.set
+     no dst do hotspot gerava %253A e o RouterOS não autenticava. */
   function withHsFlag(url) {
-    let out = addParam(url, "hs", "1");
-    const mac = hotspotMac();
-    if (mac) out = addParam(out, "mac", mac);
-    return out;
+    try {
+      const abs = new URL(url, location.href);
+      abs.searchParams.set("hs", "1");
+      const mac = hotspotMac();
+      if (mac) abs.searchParams.set("mac", mac);
+      else abs.searchParams.delete("mac");
+      if (abs.origin !== location.origin) return abs.href;
+      return abs.pathname.replace(/^\//, "") + abs.search + abs.hash;
+    } catch (e) {
+      let out = addParam(url, "hs", "1");
+      const mac = hotspotMac();
+      if (mac) out = addParam(out, "mac", mac);
+      return out;
+    }
   }
 
   function href(page) {
@@ -166,19 +190,17 @@
   }
 
   function stampLead(plan, payload) {
-    return Object.assign(
-      {
-        source: "gowork-pro-mvp",
-        origem: "Portal Wi-Fi GoWork",
-        produto: productName(plan),
-        plano: plan,
-        data_hora: new Date().toISOString(),
-        submitted_at: new Date().toISOString(),
-        /* identidade do dispositivo: liga o cadastro ao aparelho */
-        mac_dispositivo: hotspotMac(),
-      },
-      payload
-    );
+    /* Campos de identidade POR ÚLTIMO: o hidden mac_dispositivo do HTML
+       chega vazio e, se vier antes, apaga o MAC da sessão. */
+    return Object.assign({}, payload, {
+      source: "gowork-pro-mvp",
+      origem: "Portal Wi-Fi GoWork",
+      produto: productName(plan),
+      plano: plan,
+      data_hora: new Date().toISOString(),
+      submitted_at: new Date().toISOString(),
+      mac_dispositivo: hotspotMac() || normalizeMac(payload && payload.mac_dispositivo),
+    });
   }
 
   /* RouterOS só substitui $(...) no HTML. Token cru = não estamos no hotspot. */
@@ -311,15 +333,18 @@
 
   function goThanks(plan) {
     const thanks = href("obrigado.html?plano=" + encodeURIComponent(plan || ""));
-    let absolute = thanks;
+    let dest;
     try {
-      absolute = new URL(thanks, location.href).href;
+      dest = new URL(thanks, location.href);
     } catch (e) {
-      /* URL relativa sem base utilizável: manda o que temos */
+      location.href = thanks;
+      return;
     }
-    const inject = hotspotInjectUrl(absolute);
-    /* Sem hotspot (acesso externo ou preview): vai direto para o obrigado. */
-    location.href = inject || thanks;
+    /* dst do MikroTik tem que ser curto e sem MAC: %3A no dst vira %253A
+       e o /login não autentica — o visitante fica preso nessa URL. */
+    dest.searchParams.delete("mac");
+    const inject = hotspotInjectUrl(dest.href);
+    location.href = inject || dest.href;
   }
 
   function setPlanMode(plan) {
@@ -418,4 +443,11 @@
   });
 
   bindHotspotLogin();
+
+  const macNow = hotspotMac();
+  if (macNow) {
+    document.querySelectorAll('input[name="mac_dispositivo"]').forEach(function (el) {
+      el.value = macNow;
+    });
+  }
 })();
