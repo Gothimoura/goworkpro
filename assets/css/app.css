@@ -40,6 +40,8 @@ body {
   background: var(--background);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
+  /* Sem Inter instalado, pesos 550/650/800 viram negrito sintético (glifo pintado 2x). */
+  font-synthesis: none;
 }
 
 a {
@@ -163,7 +165,7 @@ textarea {
 }
 
 .brand__wordmark strong {
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .brand__wordmark span {
@@ -177,7 +179,7 @@ textarea {
   padding: 12px 18px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   display: inline-flex;
@@ -225,6 +227,7 @@ h2 {
   background: linear-gradient(90deg, var(--blue) 0%, var(--cyan) 95%);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 
@@ -400,7 +403,7 @@ h2 {
   border-radius: 999px;
   padding: 0.22rem 0.6rem;
   font-size: 0.7rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -521,7 +524,7 @@ h2 {
   color: #fff;
   background: var(--blue);
   box-shadow: none;
-  font-weight: 550;
+  font-weight: 500;
   font-size: 0.9rem;
   letter-spacing: 0;
   text-transform: none;
@@ -666,7 +669,7 @@ h2 {
   color: #fff;
   background: linear-gradient(135deg, var(--blue), var(--cyan));
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .section-title h3 {

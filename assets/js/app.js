@@ -9,24 +9,32 @@
   const HS_FLAG = "gowork-hotspot-origin";
   const HS_MAC = "gowork-hotspot-mac";
 
+  /* RouterOS às vezes devolve lixo no $(mac) depois do redirect do login.
+     Só aceita AA:BB:CC:DD:EE:FF, AA-BB-CC-DD-EE-FF ou 12 hex. */
+  function isValidMac(value) {
+    const v = String(value || "").trim();
+    return /^([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$/i.test(v) || /^[0-9a-f]{12}$/i.test(v);
+  }
+
   function setHotspotOrigin() {
     try {
       const p = new URLSearchParams(location.search);
       if (p.get("hs") === "1") sessionStorage.setItem(HS_FLAG, "1");
       const m = p.get("mac");
-      if (m) sessionStorage.setItem(HS_MAC, m);
+      if (isValidMac(m)) sessionStorage.setItem(HS_MAC, m);
     } catch (e) {
       /* navegador sem sessionStorage: segue sem a marca */
     }
   }
 
   /* MAC do visitante. Na tela 1 vem do servlet do RouterOS; nas telas externas
-     vem da URL/sessão. Literal não substituído é descartado. */
+     vem da URL/sessão. Literal ou valor inválido é descartado. */
   function hotspotMac() {
     const hs = window.GOWORK_HOTSPOT || {};
-    if (hs.mac && !isMikrotikLiteral(hs.mac)) return hs.mac;
+    if (hs.mac && !isMikrotikLiteral(hs.mac) && isValidMac(hs.mac)) return hs.mac;
     try {
-      return sessionStorage.getItem(HS_MAC) || "";
+      const stored = sessionStorage.getItem(HS_MAC) || "";
+      return isValidMac(stored) ? stored : "";
     } catch (e) {
       return "";
     }

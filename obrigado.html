@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#3f76ff">
   <title>GoWork Pro — Interesse registrado</title>
-  <link rel="stylesheet" href="assets/css/app.css?v=4">
+  <link rel="stylesheet" href="assets/css/app.css?v=5">
   <style>
     /* Selo de confirmação — específico desta tela, não existe no design system. */
     .done{display:grid;place-items:center;gap:1.1rem;text-align:center;padding:.5rem 0 0}
@@ -23,15 +23,15 @@
       .done__mark::after{animation:none}
       .done__mark svg path{animation:none;stroke-dashoffset:0}
     }
-    .done h1{margin:0;font-size:1.9rem;font-weight:650;letter-spacing:-.025em;line-height:1.15}
+    .done h1{margin:0;font-size:1.9rem;font-weight:600;letter-spacing:-.025em;line-height:1.15}
     .done__lead{margin:0;max-width:34rem;color:var(--muted);font-size:1rem;line-height:1.55}
 
     /* Trilha "o que acontece agora" */
-    .steps{list-style:none;margin:0;padding:0;display:grid;gap:.9rem;counter-reset:s}
-    .steps li{display:grid;grid-template-columns:1.6rem 1fr;gap:.75rem;align-items:start;
+    .steps{list-style:none;margin:0;padding:0;display:grid;gap:.9rem;counter-reset:s;width:100%}
+    .steps li{display:grid;grid-template-columns:1.6rem minmax(0,1fr);gap:.75rem;align-items:start;
       font-size:.92rem;line-height:1.5;color:var(--text)}
     .steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;
-      width:1.6rem;height:1.6rem;border-radius:50%;font-size:.72rem;font-weight:650;
+      width:1.6rem;height:1.6rem;border-radius:50%;font-size:.72rem;font-weight:600;
       color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,#fff);
       border:1px solid color-mix(in srgb,var(--blue) 26%,transparent)}
     .steps b{font-weight:600}
@@ -88,7 +88,7 @@
           <span id="netline-text">Acesso à rede liberado — você já pode navegar.</span>
         </div>
 
-        <h2 style="margin:.35rem 0 0;font-size:1.05rem;font-weight:620;letter-spacing:-.01em">O que acontece agora</h2>
+        <h2 style="margin:.35rem 0 0;font-size:1.05rem;font-weight:600;letter-spacing:-.01em">O que acontece agora</h2>
         <ol class="steps" id="steps"></ol>
 
         <div class="actions">
@@ -101,8 +101,8 @@
     </main>
   </div>
 
-  <script src="assets/js/config.js?v=4"></script>
-  <script src="assets/js/app.js?v=4"></script>
+  <script src="assets/js/config.js?v=5"></script>
+  <script src="assets/js/app.js?v=5"></script>
   <script>
   (function () {
     const G = window.GoworkPro;
