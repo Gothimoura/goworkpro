@@ -21,6 +21,7 @@ mkdir -p "$OUT/assets"
 # Políticas locais: o visitante ainda não tem internet antes do login.
 cp index.html "$OUT/index.html"
 cp index.html "$OUT/login.html"
+cp inject.html "$OUT/inject.html"
 cp termos.html politica-rede.html privacidade.html "$OUT/"
 cp -r assets/css assets/js assets/img "$OUT/assets/"
 

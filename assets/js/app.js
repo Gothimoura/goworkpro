@@ -310,25 +310,15 @@
     });
   }
 
-  /* INJEÇÃO DE ACESSO: quem se cadastrou entra na rede.
-     O formulário roda no domínio externo (HTTPS), mas quem autentica é o
-     roteador. Então o visitante passa pelo endpoint de login do hotspot, que
-     autentica e o devolve ao obrigado.html — já com internet liberada.
-     Exige login-by=http-pap no profile do hotspot (a página externa não tem
-     acesso ao desafio CHAP). */
+  /* INJEÇÃO DE ACESSO: o Netlify só navega até inject.html no roteador.
+     Quem faz o POST no servlet é essa página (HTTP, com $(chap-id) se precisar).
+     GET /login?user&pass no ROS 7 responde 404. */
   function hotspotInjectUrl(dst) {
     if (!cfg.hotspotLoginUrl) return "";
-    /* Só injeta se o visitante veio mesmo da tela 1 do portal. Quem abriu o
-       site de fora da rede GoWork não deve ser mandado para um IP local. */
     if (!cameFromHotspot()) return "";
     const q = new URLSearchParams();
-    q.set("username", cfg.leadUsername || cfg.conectaUsername || "conecta");
-    q.set(
-      "password",
-      cfg.leadPassword == null ? String(cfg.conectaPassword || "") : String(cfg.leadPassword)
-    );
     if (dst) q.set("dst", dst);
-    return cfg.hotspotLoginUrl + "?" + q.toString();
+    return cfg.hotspotLoginUrl + (q.toString() ? "?" + q.toString() : "");
   }
 
   function goThanks(plan) {

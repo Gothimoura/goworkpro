@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3f76ff">
+  <title>GoWork — Liberando acesso</title>
+  <link rel="stylesheet" href="assets/css/app.css?v=7">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="bg-layers" aria-hidden="true">
+      <div class="login-grid"></div>
+    </div>
+    <main class="wrap" style="display:grid;place-items:center;min-height:70vh">
+      <section class="done" style="text-align:center">
+        <p class="eyebrow">GoWork Pro</p>
+        <h1>Liberando seu <span class="gradient-text">acesso</span></h1>
+        <p class="done__lead" style="margin-top:12px;color:var(--muted)">Aguarde um instante. Você será redirecionado.</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- POST no servlet do hotspot. GET /login?user&pass devolve 404 no ROS 7. -->
+  <form id="inject" method="post" action="$(link-login-only)" hidden>
+    <input type="hidden" name="dst" value="">
+    <input type="hidden" name="popup" value="true">
+    <input type="hidden" name="username" value="">
+    <input type="hidden" name="password" value="">
+  </form>
+
+  <script src="assets/js/md5.js?v=7"></script>
+  <script>
+    window.GOWORK_HOTSPOT = {
+      chapId: "$(chap-id)",
+      chapChallenge: "$(chap-challenge)"
+    };
+  </script>
+  <script src="assets/js/config.js?v=7"></script>
+  <script>
+  (function () {
+    const cfg = window.GOWORK_PRO_CONFIG || {};
+    const form = document.getElementById("inject");
+    const dst = new URLSearchParams(location.search).get("dst") || "";
+    const action = form.getAttribute("action") || "";
+    const onHotspot = action.indexOf("$(") === -1 && action !== "";
+
+    /* Fora do html-directory do MikroTik: não há servlet — vai direto ao destino. */
+    if (!onHotspot) {
+      location.href = dst || "obrigado.html";
+      return;
+    }
+
+    form.querySelector('[name="dst"]').value = dst;
+    form.querySelector('[name="username"]').value = cfg.leadUsername || cfg.conectaUsername || "conecta";
+    const password = cfg.leadPassword == null ? String(cfg.conectaPassword || "") : String(cfg.leadPassword);
+    const passEl = form.querySelector('[name="password"]');
+    const chap = window.GOWORK_HOTSPOT || {};
+    if (
+      chap.chapId &&
+      String(chap.chapId).indexOf("$(") === -1 &&
+      chap.chapChallenge &&
+      String(chap.chapChallenge).indexOf("$(") === -1 &&
+      typeof window.hexMD5 === "function"
+    ) {
+      passEl.value = window.hexMD5(chap.chapId + password + chap.chapChallenge);
+    } else {
+      passEl.value = password;
+    }
+    form.submit();
+  })();
+  </script>
+</body>
+</html>

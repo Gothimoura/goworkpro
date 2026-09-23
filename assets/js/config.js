@@ -6,9 +6,9 @@ window.GOWORK_PRO_CONFIG = {
   /* Usuário genérico do hotspot MikroTik (login-by=http-chap). Criar o mesmo par no RB5009. */
   conectaUsername: "conecta",
   conectaPassword: "conecta",
-  /* INJEÇÃO DE ACESSO pós-cadastro: endpoint de login do hotspot no RB5009.
-     Só é acionado quando o visitante chegou pela tela 1 (marcador ?hs=1). */
-  hotspotLoginUrl: "http://192.168.33.1/login",
+  /* INJEÇÃO DE ACESSO: página no roteador que faz POST em $(link-login-only).
+     GET /login?username=&password= devolve 404 no RouterOS 7. */
+  hotspotLoginUrl: "http://192.168.33.1/inject.html",
   leadUsername: "lead",
   leadPassword: "gowork-lead",
   webhookUrl: "https://flux.gowork.com.br/webhook/gowork-pro-lead-teste",
