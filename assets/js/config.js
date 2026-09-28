@@ -16,7 +16,7 @@ window.GOWORK_PRO_CONFIG = {
   hubspotFormIdDayMensal: "",
   hubspotFormIdCorporate: "",
   /* Liga o POST urlencoded para Netlify Forms (antes do localStorage). */
-  netlifyForm: true,
+  netlifyForm: false,
   /* Relativos de propósito: a tela 1 não tem internet antes do login. */
   termsUrl: "termos.html",
   networkPolicyUrl: "politica-rede.html",

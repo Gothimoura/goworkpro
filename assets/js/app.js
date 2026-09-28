@@ -255,20 +255,17 @@
     const stamped = stampLead(payload.plano || kind, payload);
 
     if (cfg.webhookUrl) {
-      /* Se o webhook responder, acabou aqui. Se cair (n8n fora do ar, CORS,
-         workflow desativado), NÃO perdemos o lead: seguimos para o próximo
-         destino da cascata em vez de estourar erro para o visitante. */
-      try {
-        const res = await fetch(cfg.webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(stamped),
-        });
-        if (res.ok) return;
-        console.warn("Webhook respondeu " + res.status + " — usando destino reserva.");
-      } catch (ex) {
-        console.warn("Webhook inacessível — usando destino reserva.", ex);
-      }
+      /* Destino único: n8n -> Supabase. Sem reserva no Netlify Forms, que
+         consome cota. Falha aqui é ERRO VISÍVEL: o visitante vê a mensagem,
+         não ganha acesso, e pode tentar de novo. Preferimos falhar alto a
+         gravar num lugar que ninguém olha. */
+      const res = await fetch(cfg.webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(stamped),
+      });
+      if (!res.ok) throw new Error("Falha ao enviar (" + res.status + "). Tente de novo.");
+      return;
     }
 
     const formId = kind === "corporate" ? cfg.hubspotFormIdCorporate : cfg.hubspotFormIdDayMensal;
@@ -288,16 +285,6 @@
       });
       if (!res.ok) throw new Error("HubSpot recusou o envio (" + res.status + ").");
       return;
-    }
-
-    if (cfg.netlifyForm) {
-      try {
-        await submitNetlifyForm(kind, stamped);
-        return;
-      } catch (ex) {
-        /* Preview local/file:// não tem endpoint do Netlify — cai no localStorage. */
-        if (!isLocalPreview()) throw ex;
-      }
     }
 
     saveLeadLocal(stamped);
