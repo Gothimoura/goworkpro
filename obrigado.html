@@ -170,7 +170,9 @@
     set("thanks-foot", v.foot);
 
     document.getElementById("steps").innerHTML =
-      v.steps.map((s) => "<li>" + s + "</li>").join("");
+      /* span obrigatório: o li é grid de 2 colunas e o texto solto depois
+         do <b> viraria um 3º item, caindo na coluna estreita do número. */
+      v.steps.map((s) => "<li><span>" + s + "</span></li>").join("");
 
     /* A faixa verde só faz sentido para quem realmente saiu daqui com acesso —
        ou seja, quem veio pelo portal. Fora do hotspot ela some. */
