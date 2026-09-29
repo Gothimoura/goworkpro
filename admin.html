@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#3f76ff">
+<title>GoWork Pro — Painel</title>
+<link rel="stylesheet" href="assets/css/app.css?v=8">
+<style>
+  :root{
+    --ok:#249689; --off:#dc3545;
+    --ink-2:#63708d; --ink-3:#8b98b3;
+  }
+  body{background:var(--background)}
+  .pnl{max-width:1180px;margin:0 auto;padding:20px 16px 56px}
+
+  /* ---- login ---- */
+  .login-wrap{min-height:78vh;display:grid;place-items:center}
+  .login-card{width:min(24rem,100%);background:var(--card);border:1px solid var(--line);
+    border-radius:1rem;box-shadow:var(--shadow);padding:1.6rem}
+  .login-card h1{margin:.2rem 0 .3rem;font-size:1.3rem;letter-spacing:-.02em}
+  .login-card p{margin:0 0 1.2rem;color:var(--muted);font-size:.88rem;line-height:1.5}
+  .fld{display:grid;gap:.3rem;margin-bottom:.8rem}
+  .fld label{font-size:.78rem;color:var(--muted);font-weight:600}
+  .fld input{padding:.62rem .7rem;border:1px solid var(--line);border-radius:.55rem;
+    font:inherit;font-size:.92rem;background:#fff;color:var(--text)}
+  .fld input:focus{outline:2px solid color-mix(in srgb,var(--blue) 45%,transparent);outline-offset:1px}
+
+  /* ---- topo ---- */
+  .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    flex-wrap:wrap;margin-bottom:1.1rem}
+  .top h1{margin:0;font-size:1.25rem;letter-spacing:-.02em}
+  .who{font-size:.8rem;color:var(--muted)}
+
+  /* ---- tiles ---- */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));
+    gap:.75rem;margin-bottom:1.1rem}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:.85rem;padding:.85rem 1rem}
+  .tile .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);
+    font-weight:650;margin-bottom:.3rem}
+  .tile .v{font-size:1.65rem;font-weight:640;letter-spacing:-.03em;line-height:1.1;
+    font-variant-numeric:tabular-nums}
+  .tile .s{font-size:.75rem;color:var(--muted);margin-top:.15rem}
+
+  /* ---- barras de composicao (sem lib) ---- */
+  .bars{display:grid;gap:.5rem;margin-top:.2rem}
+  .bar-row{display:grid;grid-template-columns:7.5rem 1fr 3.2rem;gap:.6rem;align-items:center;
+    font-size:.84rem}
+  .bar-track{height:.55rem;background:#eef2f9;border-radius:99px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:99px;background:var(--blue)}
+  .bar-row .n{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+
+  /* ---- cartoes / tabelas ---- */
+  .card2{background:var(--card);border:1px solid var(--line);border-radius:.9rem;
+    padding:1rem 1.1rem 1.15rem;margin-bottom:1.1rem}
+  .card2 h2{margin:0 0 .15rem;font-size:1rem;font-weight:640;letter-spacing:-.01em}
+  .card2 .hint{margin:0 0 .8rem;font-size:.8rem;color:var(--muted)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--ink-3);font-weight:650;padding:.45rem .6rem;border-bottom:1px solid var(--line);
+    white-space:nowrap}
+  td{padding:.55rem .6rem;border-bottom:1px solid #f0f4fa;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem}
+
+  .pill{display:inline-flex;align-items:center;gap:.32rem;padding:.13rem .5rem;
+    border-radius:99px;font-size:.73rem;font-weight:600;white-space:nowrap}
+  .pill::before{content:"";width:.42rem;height:.42rem;border-radius:50%;background:currentColor}
+  .pill.on{color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,#fff);
+    border:1px solid color-mix(in srgb,var(--ok) 28%,transparent)}
+  .pill.off{color:var(--off);background:color-mix(in srgb,var(--off) 8%,#fff);
+    border:1px solid color-mix(in srgb,var(--off) 26%,transparent)}
+
+  .mini{padding:.3rem .65rem;border-radius:.45rem;border:1px solid var(--line);
+    background:#fff;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--text)}
+  .mini:hover{border-color:var(--blue);color:var(--blue)}
+  .mini.danger:hover{border-color:var(--off);color:var(--off)}
+  .mini[disabled]{opacity:.5;cursor:default}
+
+  .msg{padding:.6rem .8rem;border-radius:.55rem;font-size:.84rem;margin-bottom:.8rem;display:none}
+  .msg.err{display:block;background:#fff3f4;border:1px solid color-mix(in srgb,var(--off) 28%,transparent);color:#a11}
+  .msg.ok{display:block;background:#f2fff8;border:1px solid color-mix(in srgb,var(--ok) 28%,transparent);color:var(--ok)}
+  .vazio{padding:1.4rem;text-align:center;color:var(--ink-3);font-size:.86rem}
+  [hidden]{display:none!important}
+  @media(max-width:640px){
+    .bar-row{grid-template-columns:5.5rem 1fr 2.6rem}
+    .tile .v{font-size:1.4rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<section id="tela-login" class="pnl login-wrap">
+  <form class="login-card" id="form-login">
+    <h1>GoWork Pro</h1>
+    <p>Painel interno. Acesso restrito à equipe.</p>
+    <div id="erro-login" class="msg"></div>
+    <div class="fld">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" autocomplete="username" required>
+    </div>
+    <div class="fld">
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" autocomplete="current-password" required>
+    </div>
+    <button class="cta" type="submit" id="btn-entrar" style="width:100%;margin-top:.4rem">Entrar</button>
+  </form>
+</section>
+
+<!-- ================= PAINEL ================= -->
+<main id="tela-painel" class="pnl" hidden>
+  <div class="top">
+    <h1>GoWork Pro — Painel</h1>
+    <div style="display:flex;align-items:center;gap:.7rem">
+      <span class="who" id="quem"></span>
+      <button class="mini" id="btn-atualizar">Atualizar</button>
+      <button class="mini" id="btn-sair">Sair</button>
+    </div>
+  </div>
+
+  <div id="aviso" class="msg"></div>
+
+  <div class="tiles" id="tiles"></div>
+
+  <section class="card2">
+    <h2>Composição</h2>
+    <p class="hint">Leads por plano e por unidade.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1.4rem">
+      <div><div class="bars" id="por-plano"></div></div>
+      <div><div class="bars" id="por-unidade"></div></div>
+    </div>
+  </section>
+
+  <section class="card2">
+    <h2>Leads</h2>
+    <p class="hint">Todos os cadastros recebidos pelo portal.</p>
+    <div class="scroll"><table id="tbl-leads">
+      <thead><tr>
+        <th>Quando</th><th>Nome</th><th>Contato</th><th>Empresa</th>
+        <th>Plano</th><th>Unidade</th><th class="num">Usuários</th>
+        <th class="num">Potencial</th><th>Dispositivo</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <div class="vazio" id="leads-vazio" hidden>Nenhum lead ainda.</div>
+  </section>
+
+  <section class="card2">
+    <h2>Dispositivos</h2>
+    <p class="hint">
+      Aparelhos reconhecidos na rede. Revogar remove o acesso automático em até 5 minutos,
+      na próxima sincronização do roteador — e derruba a sessão ativa.
+    </p>
+    <div class="scroll"><table id="tbl-disp">
+      <thead><tr>
+        <th>MAC</th><th>Pessoa</th><th>Unidade</th><th>Liberado em</th>
+        <th>Situação</th><th></th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <div class="vazio" id="disp-vazio" hidden>Nenhum dispositivo registrado.</div>
+  </section>
+</main>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+/* A chave publishable pode ficar aqui: ela é feita para o navegador.
+   Sem sessão autenticada o RLS não devolve nenhuma linha — conferido. */
+const SUPABASE_URL = "https://rgncdzotsbrxmdghimpj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_9Qc0yJKVFu72ouTe3pUBgw_OZmASdQv";
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const $  = (s) => document.querySelector(s);
+const el = (s) => document.getElementById(s);
+
+const brl = (centavos) =>
+  ((centavos || 0) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const dt = (iso) =>
+  iso ? new Date(iso).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
+const esc = (v) =>
+  String(v ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const vazio = '<span style="color:#8b98b3">—</span>';
+
+function aviso(texto, tipo = "err") {
+  const a = el("aviso");
+  a.textContent = texto;
+  a.className = "msg " + tipo;
+  if (tipo === "ok") setTimeout(() => { a.className = "msg"; }, 3500);
+}
+
+/* ---------- sessão ---------- */
+async function mostrar(sessao) {
+  const logado = Boolean(sessao);
+  el("tela-login").hidden = logado;
+  el("tela-painel").hidden = !logado;
+  if (logado) {
+    el("quem").textContent = sessao.user.email;
+    await carregar();
+  }
+}
+
+el("form-login").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const b = el("btn-entrar");
+  b.disabled = true; b.textContent = "Entrando…";
+  const { error } = await sb.auth.signInWithPassword({
+    email: el("email").value.trim(),
+    password: el("senha").value,
+  });
+  b.disabled = false; b.textContent = "Entrar";
+  if (error) {
+    const box = el("erro-login");
+    box.textContent = "E-mail ou senha incorretos.";
+    box.className = "msg err";
+  }
+});
+
+el("btn-sair").addEventListener("click", async () => { await sb.auth.signOut(); });
+el("btn-atualizar").addEventListener("click", () => carregar());
+
+sb.auth.onAuthStateChange((_e, sessao) => mostrar(sessao));
+mostrar((await sb.auth.getSession()).data.session);
+
+/* ---------- dados ---------- */
+async function carregar() {
+  const [leads, disp] = await Promise.all([
+    sb.from("vw_painel_leads").select("*").order("created_at", { ascending: false }),
+    sb.from("dispositivos").select("*").order("liberado_em", { ascending: false }),
+  ]);
+  if (leads.error) return aviso("Erro ao carregar leads: " + leads.error.message);
+  if (disp.error)  return aviso("Erro ao carregar dispositivos: " + disp.error.message);
+  pintarTiles(leads.data);
+  pintarBarras(leads.data);
+  pintarLeads(leads.data);
+  pintarDispositivos(disp.data);
+}
+
+function pintarTiles(rows) {
+  const total = rows.length;
+  const receita = rows.reduce((s, r) => s + (r.potencial_receita_centavos || 0), 0);
+  const comMac = rows.filter((r) => r.mac_dispositivo).length;
+  const hoje = new Date().toDateString();
+  const doDia = rows.filter((r) => new Date(r.created_at).toDateString() === hoje).length;
+
+  el("tiles").innerHTML = [
+    ["Leads", total, doDia + " hoje"],
+    ["Potencial de receita", brl(receita), total ? "média " + brl(receita / total) : "—"],
+    ["Com dispositivo", comMac, total ? Math.round((comMac / total) * 100) + "% do total" : "—"],
+    ["Corporate", rows.filter((r) => r.plano_codigo === "corporate").length, "sob diagnóstico"],
+  ].map(([k, v, s]) =>
+    `<div class="tile"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div><div class="s">${esc(s)}</div></div>`
+  ).join("");
+}
+
+/* Barras simples em vez de gráfico: com poucas categorias, uma barra
+   rotulada lê melhor que qualquer chart — e não precisa de biblioteca. */
+function barras(destino, titulo, contagem) {
+  const itens = Object.entries(contagem).sort((a, b) => b[1] - a[1]);
+  const max = Math.max(1, ...itens.map(([, n]) => n));
+  el(destino).innerHTML =
+    `<div class="k" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;
+      color:#8b98b3;font-weight:650;margin-bottom:.55rem">${esc(titulo)}</div>` +
+    (itens.length
+      ? itens.map(([nome, n]) =>
+          `<div class="bar-row"><span>${esc(nome)}</span>
+           <span class="bar-track"><span class="bar-fill" style="width:${(n / max) * 100}%"></span></span>
+           <span class="n">${n}</span></div>`).join("")
+      : `<div style="color:#8b98b3;font-size:.84rem">sem dados</div>`);
+}
+
+function pintarBarras(rows) {
+  const porPlano = {}, porUnidade = {};
+  rows.forEach((r) => {
+    const p = r.plano_codigo || "—";
+    porPlano[p] = (porPlano[p] || 0) + 1;
+    const u = r.unidade || "não informada";
+    porUnidade[u] = (porUnidade[u] || 0) + 1;
+  });
+  barras("por-plano", "Por plano", porPlano);
+  barras("por-unidade", "Por unidade", porUnidade);
+}
+
+function pintarLeads(rows) {
+  el("leads-vazio").hidden = rows.length > 0;
+  $("#tbl-leads tbody").innerHTML = rows.map((r) => `
+    <tr>
+      <td style="white-space:nowrap">${dt(r.created_at)}</td>
+      <td><strong>${esc(r.nome)}</strong>${r.tem_diagnostico ? ' <span class="pill on" style="font-size:.68rem">diagnóstico</span>' : ""}</td>
+      <td>${esc(r.email)}<br><span style="color:#63708d;font-size:.78rem">${esc(r.whatsapp) || ""}</span></td>
+      <td>${esc(r.empresa) || vazio}</td>
+      <td>${esc(r.plano_codigo)}</td>
+      <td>${esc(r.unidade) || vazio}</td>
+      <td class="num">${r.quantidade_usuarios ?? "—"}</td>
+      <td class="num">${r.potencial_receita_centavos ? brl(r.potencial_receita_centavos) : vazio}</td>
+      <td class="mono">${r.mac_dispositivo ? esc(r.mac_dispositivo) : '<span style="color:#dc3545">sem MAC</span>'}</td>
+    </tr>`).join("");
+}
+
+function pintarDispositivos(rows) {
+  el("disp-vazio").hidden = rows.length > 0;
+  $("#tbl-disp tbody").innerHTML = rows.map((d) => `
+    <tr>
+      <td class="mono">${esc(d.mac)}</td>
+      <td>${esc(d.nome_exibicao) || vazio}</td>
+      <td>${esc(d.unidade_id ? "—" : "") || vazio}</td>
+      <td style="white-space:nowrap">${dt(d.liberado_em)}</td>
+      <td><span class="pill ${d.liberado ? "on" : "off"}">${d.liberado ? "liberado" : "revogado"}</span></td>
+      <td style="text-align:right">
+        <button class="mini ${d.liberado ? "danger" : ""}" data-mac="${esc(d.mac)}" data-acao="${d.liberado ? "revogar" : "reativar"}">
+          ${d.liberado ? "Revogar" : "Reativar"}
+        </button>
+      </td>
+    </tr>`).join("");
+}
+
+/* Revogar / reativar — o único write que o painel pode fazer.
+   O grant por coluna impede mexer no MAC ou trocar o dono. */
+$("#tbl-disp").addEventListener("click", async (e) => {
+  const b = e.target.closest("button[data-mac]");
+  if (!b) return;
+  const revogando = b.dataset.acao === "revogar";
+  if (revogando && !confirm(`Revogar o acesso de ${b.dataset.mac}?\n\nO roteador remove o aparelho na próxima sincronização (até 5 min) e derruba a sessão ativa.`)) return;
+
+  b.disabled = true; b.textContent = "…";
+  const { error } = await sb.from("dispositivos")
+    .update(revogando ? { liberado: false, revogado_em: new Date().toISOString() }
+                      : { liberado: true,  revogado_em: null })
+    .eq("mac", b.dataset.mac);
+
+  if (error) { aviso("Não foi possível alterar: " + error.message); b.disabled = false; return; }
+  aviso(revogando ? "Revogado. O roteador aplica em até 5 minutos." : "Reativado.", "ok");
+  carregar();
+});
+</script>
+</body>
+</html>
